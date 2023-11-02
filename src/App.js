@@ -1,5 +1,8 @@
-import logo from './logo.svg';
+import logo from './Media/logo.png';
 import './App.css';
+import prueba from './ServiciosIA/chatPDF';
+
+
 
 function App() {
   return (
@@ -15,7 +18,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          {prueba()}
         </a>
       </header>
     </div>
