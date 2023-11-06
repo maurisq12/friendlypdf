@@ -44,13 +44,12 @@ export async function procesarPrompt(prompt) {
       // Llamar a la función 'crearImagen' y esperar a que se complete
       respuestaImg = await crearImagen(respuestaChatPDF);
   
-      let armarJson = {
+      let respuesta = {
         text: respuestaChatPDF,
         audioSrc: respuestaT2V,
         imgSrc: respuestaImg,
+        type: "bot"
       };
-  
-      const respuesta = JSON.stringify(armarJson);
   
       return respuesta;
     } catch (error) {

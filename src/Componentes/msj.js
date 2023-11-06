@@ -31,10 +31,7 @@ function ChatBot({ message }) {
         </div>
       </div>
     );
-
   }
-
-
 }
 
 export default ChatBot;

@@ -3,7 +3,7 @@ import FormData from "form-data";
 import { FileUploader } from "react-drag-drop-files";
 import ChatBot from "./Componentes/msj";
 import Header from "./Componentes/header";
-import { ingresarPDF, procesarPrompt} from './ServiciosIA/integración'
+import { ingresarPDF, procesarPrompt } from './ServiciosIA/integración'
 
 import './App.css'
 
@@ -15,7 +15,7 @@ function ChatBotApp() {
   };
 
   const [loading, setLoading] = useState(false);
-  const [loadingMessage, setLoadingMessage] = useState("Cargando...");
+  const [loadingMessage, setLoadingMessage] = useState("Procesando consulta...");
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [file, setFile] = useState(null);
@@ -59,25 +59,34 @@ function ChatBotApp() {
     }
   }
 
-  async function consultarPDF(texto) {
-    setLoading(true);
-    try {
-      const resp = await procesarPrompt(texto);
-      console.log("La respuesta es ", resp)
-      setMessages([...messages, { text: resp, type: "bot" }]);
-    } catch (error) {
-      console.error('Error en procesarPrompt:', error);
-    } finally {
-      setLoading(false);
-    }
-  }
+  async function handleUserMessage(userMessage) {
+    // Guardar el mensaje del usuario
+    const newUserMessage = { text: userMessage, type: "user" };
+    setMessages((prevMessages) => [...prevMessages, newUserMessage]);
 
-  async function handleUserMessage(usuario) {
-    if (input && usuario === "usuario") {
-      setMessages([...messages, { text: input, type: "user" }]);
-      await consultarPDF(input);
-      setInput("");
+    if (userMessage.trim() !== "") {
+      setLoading(true);
+      try {
+        // Procesar la consulta del usuario y obtener la respuesta del bot
+        const response = await procesarPrompt(userMessage);
+        /*
+        let response = {
+          text: " Grace Hopper developed the first computer language, which eventually became known as COBOL.",
+          audioSrc: "https://s3.eu-central-1.amazonaws.com/tts-download/acffa0ff387ba934a0a9f0acb5ddb244.wav?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZ3CYNLHHVKA7D7Z4%2F20231106%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20231106T183754Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=51e93a21aec6b3d1e379e837ae7b92fc10e9ccfa83869caf9769059d49f02280",
+          imgSrc: "https://neural.love/cdn/ai-photostock/1ee7cd39-c562-66ba-9c1c-a184ef3400f4/0.jpg?Expires=1704067199&Signature=nu2LKBlQb6syA1AayclbLFDoGCMnIUPsdXhsOwQ~xOe1ZysbFKejL-xfElZBGqoVYzAyJCAAqA~rSWb77TF6skmjYNeIh~BRNg~9n5z~FnllcinJpiEqourblAyFWylcirHwi06PC6E~N-408-FrRi93IU4KLENU9X748DIX29DbSaU0WqFSXzi9khQ8uJW5VYp1IrRROdCBBjVxV40Wba~5QqGJ4woEMot4ggUVYubakkudnsNV5EF3uVfLImydGrn4rU5SxeS-Hf9LLkOUdm0J7twlBREYaFNzF-3iXQC3Kcgg5CUAEucZYFUcu77vu7ZjWGd8SskFw4Pznw8~mQ__&Key-Pair-Id=K2RFTOXRBNSROX",
+          type: "bot"
+        };*/
+
+        // Guardar la respuesta del bot
+        setMessages((prevMessages) => [...prevMessages, response]);
+      } catch (error) {
+        console.error('Error en procesarPrompt:', error);
+      } finally {
+        setLoading(false);
+      }
     }
+
+    setInput("");
   }
 
   return (
@@ -137,7 +146,7 @@ function ChatBotApp() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
             />
-            <button className=".button-select-file" onClick={() => handleUserMessage("usuario")}>Enviar</button>
+            <button className=".button-select-file" onClick={() => handleUserMessage(input)}>Enviar</button>
           </div>
         </div>
       </div>
