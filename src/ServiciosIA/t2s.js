@@ -4,6 +4,7 @@ let idAudio = null;
 let urlAudio = null;
 
 async function iniciarProcesoTextoAudio(texto) {
+    console.log("El texto que está recibiendo el t2s es, ",texto)
     const options = {
         method: 'POST',
         url: 'https://large-text-to-speech.p.rapidapi.com/tts',
@@ -22,7 +23,7 @@ async function iniciarProcesoTextoAudio(texto) {
         idAudio = response.data.id;
         console.log('Proceso de texto iniciado. ID del proceso:', idAudio);
     } catch (error) {
-        console.error('Error al iniciar el proceso de texto:', error);
+        console.error('Error al iniciar el proceso de texto a audio:', error);
         throw error;
     }
 }

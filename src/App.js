@@ -1,38 +1,148 @@
-import React from 'react';
-import logo from './Media/logo.png';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import FormData from "form-data";
+import { FileUploader } from "react-drag-drop-files";
+import ChatBot from "./Componentes/msj";
+import Header from "./Componentes/header";
+import { ingresarPDF, procesarPrompt} from './ServiciosIA/integración'
 
+import './App.css'
 
-function App() {
+function ChatBotApp() {
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleUserMessage("usuario");
+    }
+  };
+
+  const [loading, setLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("Cargando...");
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [file, setFile] = useState(null);
+
+  useEffect(() => {
+    const element = document.querySelector(".sc-fqkvVR");
+    if (element) {
+      if (element && element.textContent.includes("another")) {
+        element.textContent = "Archivo seleccionado";
+      }
+
+      const welcomeMessage =
+        "Gracias por usar el servicio FriendlyPDF. Arriba se muestra el PDF que seleccionaste. ¿En qué puedo ayudarte?";
+      setMessages([{ text: welcomeMessage, type: "bot" }]);
+    }
+  }, [file]);
+
+  const handleChange = (file) => {
+    setFile(file);
+  };
+
+  async function selectPDF() {
+    if (file === null) {
+      document.getElementById('resultSelectNull').style.display = 'contents';
+      return;
+    } else {
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        await ingresarPDF(formData);
+        document.getElementById('resultSelectNull').style.display = 'none';
+        document.getElementById('resultSelectSuccess').style.display = 'contents';
+        document.getElementById('divFileSelect').style.display = 'none';
+        document.getElementById('chatPDF').style.display = 'block';
+        document.getElementById('selecciona').style.display = 'none';
+        document.getElementById('title').style.display = 'none';
+      } catch (error) {
+        console.error('Error en procesarPrompt:', error);
+        document.getElementById('resultSelectFail').style.display = 'contents';
+      }
+    }
+  }
+
+  async function consultarPDF(texto) {
+    setLoading(true);
+    try {
+      const resp = await procesarPrompt(texto);
+      console.log("La respuesta es ", resp)
+      setMessages([...messages, { text: resp, type: "bot" }]);
+    } catch (error) {
+      console.error('Error en procesarPrompt:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleUserMessage(usuario) {
+    if (input && usuario === "usuario") {
+      setMessages([...messages, { text: input, type: "user" }]);
+      await consultarPDF(input);
+      setInput("");
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+    <div>
+      <Header />
+      <div style={{ textAlign: 'center' }}>
+        <h1 id='title' className="pageTitle">Bienvenido a Friendly PDF AI</h1>
+        <p id="selecciona" style={{ marginTop: '1px' }}>
+          Realiza consultas a tus archivos PDF, recibe respuestas en texto, audio e imagen.
         </p>
-        <a
-          id="arch"
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          nada jaja
-        </a>
-        <form id="miFormulario">
-          <input type="file" id="archivoInput" name="archivo" accept="application/pdf" />
-          <button type="button">Subir Archivo</button>
-        </form>
-
-        <audio controls id="reproductorAudio">
-          <source src="https://s3.eu-central-1.amazonaws.com/tts-download/bb4d13c5eb0f394d4e7af3855995a987.wav?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAZ3CYNLHHVKA7D7Z4%2F20231103%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20231103T233452Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=33a33243c09e271b9cee25599aab4a2bbe48cc6f5d614e6afe8b923e1c90b70e" type="audio/wav"/>
-            Tu navegador no admite la reproducción de audio.
-        </audio>
-        <img src="https://neural.love/cdn/ai-photostock/1ee7a79e-a007-6174-bd84-d7d78f7dc42a/0.jpg?Expires=1704067199&Signature=e7rZtJiRE00fq-Ga9FiNQHc0VGZOrY9iUOoCHy2AUuY~lhRqsAnkEYjfCZsPTMEJiRxXv-KyiVtmPbhNx112JOLRVCrDWFNHdFC2KZAa5YUP5FAT8lTHfzeSyBaSs9nAxl-LqJkSxx13r85WFsDFVAsVqXcYd-7EEBCEIEWnafW~Oo4s1c9HVpXvpbK0Qe0M3Aw1~UipsjdP947HuSl68RabpVAVYW84EI8kVJt4UAAnpX38PwCQoyvPwXW~lJWJY0mGjA6-l~GLNH5O1kHfabMA0wmRxOUm2AplrwV0iFq0Cuv3SC-jx1TtOva0Hfcrb1FwEtmwnrflsHHegPhdiA__&Key-Pair-Id=K2RFTOXRBNSROX" alt="Descripción de la imagen"></img>
-      </header>
+        <div style={{ display: 'inline-block' }}>
+          <p id="resultSelectSuccess" style={{ color: 'green', display: 'none' }}>
+            ¡Archivo agregado con éxito! Ahora puedes hacer consultas
+          </p>
+          <p id="resultSelectFail" style={{ color: 'red', display: 'none' }}>
+            Error, inténtalo de nuevo o prueba con otro documento
+          </p>
+          <p id="resultSelectNull" style={{ color: 'red', display: 'none' }}>
+            Debe seleccionar un documento para continuar
+          </p>
+          <div id='divFileSelect' className="file-upload">
+            <FileUploader
+              multiple={false}
+              handleChange={handleChange}
+              name="file"
+              types={["PDF"]}
+              label="Seleccione o arrastre su archivo aquí"
+              hoverTitle="Suelta aquí"
+              fileOrFiles={null}
+            />
+            <p style={{ paddingLeft: '100px', paddingRight: '100px' }}>
+              {file ? `Documento: ${file.name}` : "Aún no se ha seleccionado un archivo"}
+            </p>
+            <button id="btnContinuar" onClick={selectPDF} className="button-select-file">
+              Confirmar
+            </button>
+          </div>
+        </div>
+        <div id='chatPDF' className="chatbot-container">
+          <div className="chatHeader">
+            <p>{file ? `Documento: ${file.name}` : "Aún no se ha seleccionado un archivo"}</p>
+          </div>
+          <div className="chatbot-messages">
+            {messages.map((message, index) => (
+              <ChatBot key={index} message={message} />
+            ))}
+          </div>
+          <div className="loading-message" style={{ display: loading ? "block" : "none" }}>
+            {loadingMessage}
+          </div>
+          <hr size="1px" color="lightgrey" style={{ marginTop: "0px" }} />
+          <div className="chatbot-input">
+            <input
+              type="text"
+              placeholder="Escribe tu consulta..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <button className=".button-select-file" onClick={() => handleUserMessage("usuario")}>Enviar</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default App;
+export default ChatBotApp;

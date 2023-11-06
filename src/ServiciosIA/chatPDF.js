@@ -41,17 +41,21 @@ export function consultar(prompt) {
     ],
   };
 
-  axios
-    .post("https://api.chatpdf.com/v1/chats/message", data, config)
-    .then((response) => {
-      console.log("Result:", response.data.content);
-      
-    })
-    .catch((error) => {
-      console.error("Error:", error.message);
-      console.log("Response:", error.response.data);
-    });
+  return new Promise((resolve, reject) => {
+    axios
+      .post("https://api.chatpdf.com/v1/chats/message", data, config)
+      .then((response) => {
+        console.log("Result:", response.data.content);
+        resolve(response.data.content);
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+        console.log("Response:", error.response.data);
+        reject(error);
+      });
+  });
 }
+
 
 export function quitarPDF(){
   const config = {

@@ -1,14 +1,35 @@
-import { añadirPDF, consultar, quitarPDF } from '../ServiciosIA/chatPDF';
-import {crearImagen,checkStatus} from  '../ServiciosIA/crearImagen';
-import {textoAudio, getAudio} from '../ServiciosIA/t2s'
+import { añadirPDF, consultar} from '../ServiciosIA/chatPDF';
+import {crearImagen} from  '../ServiciosIA/crearImagen';
+import {crearAudio} from '../ServiciosIA/t2s'
 
 let respuestaChatPDF="";
 let respuestaT2V="";
 let respuestaImg="";
 
 
-export function ingresarPDF(doc){
-    añadirPDF(doc)
+export async  function ingresarPDF(doc){
+  try{
+    añadirPDF(doc);
+  } catch (error) {
+    // Manejar errores aquí, por ejemplo, puedes registrar el error o lanzar una excepción.
+    console.error('Error al ingresar el pdf al API:', error);
+    throw error;
+  }
+    
+}
+
+export async function pruebaAudio(){
+  try {
+    // Llamar a la función 'textoAudio' y esperar a que se complete
+    respuestaT2V = await crearAudio("why is it not working rn?");
+    console.log("El ulr del audio es: ",respuestaT2V);
+
+  } catch (error) {
+    // Manejar errores aquí, por ejemplo, puedes registrar el error o lanzar una excepción.
+    console.error('Error en procesarPrompt:', error);
+    throw error;
+  }
+
 }
 
 
@@ -18,15 +39,15 @@ export async function procesarPrompt(prompt) {
       respuestaChatPDF = await consultar(prompt);
   
       // Llamar a la función 'textoAudio' y esperar a que se complete
-      respuestaT2V = await textoAudio(respuestaChatPDF);
+      respuestaT2V = await crearAudio(respuestaChatPDF);
   
       // Llamar a la función 'crearImagen' y esperar a que se complete
       respuestaImg = await crearImagen(respuestaChatPDF);
   
       let armarJson = {
-        respText: respuestaChatPDF,
-        respAudio: respuestaT2V,
-        respImg: respuestaImg,
+        text: respuestaChatPDF,
+        audioSrc: respuestaT2V,
+        imgSrc: respuestaImg,
       };
   
       const respuesta = JSON.stringify(armarJson);
