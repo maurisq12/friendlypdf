@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import logoImage from '../Media/logo.png'
+import { Link } from "react-router-dom";
 import './components.css'
 
 function Header() {
@@ -17,8 +18,12 @@ function Header() {
                 </Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto" style={{ display: 'flex' }}>
-                        <Nav.Link href="#home" className="nav-link-spacing">Inicio</Nav.Link>
-                        <Nav.Link href="#link" className="nav-link-spacing">Servicio</Nav.Link>
+                        <Link to="/" className="nav-link-spacing">
+                            Inicio
+                        </Link>
+                        <Link to="/service" className="nav-link-spacing">
+                            Servicio
+                        </Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
