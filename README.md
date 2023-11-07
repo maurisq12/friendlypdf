@@ -1,70 +1,32 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+A grandes rasgos, la herramienta permite seleccionar un
+archivo con extension .pdf cuyo contenido debe ser textual, no ´
+grafico ni de otro tipo, esto para que pueda ser procesado de la ´
+mejor manera. Tras el ingreso del documento deseado, se permite tener una interaccion tipo chat con el sistema, que simula ´
+estar hablando con un bot que responde a sus consultas sobre
+el documento proporcionado. El usuario escribe la consulta y
+espera que se obtenga una respuesta. El bot contestara con ´
+la informacion textual m ´ as precisa que pueda responder a la ´
+pregunta realizada. Adjunto, se encuentra de forma integrada
+un reproductor de sonido, que al ser reproducido emite un
+audio cuyo contenido es el resultado obtenido. De igual forma,
+se muestra como parte de la respuesta una imagen, que busca
+ilustrar la idea que se expresa en el resultado de la consulta.
+El proyecto tiene como objetivo ser una herramienta de
+estudio y formacion por medio de consultas a documentos ´
+informativos que ayudan al usuario a repasar y comprender
+mejor el contenido de estos. Se basa en los tipos de aprendizaje, pues de forma auditiva se puede obtener la informacion´
+deseada, de forma visual pues se tiene una imagen que ilustra
+la informacion y puede ayudar a recordar detalles de esta. Por ´
+ultimo, con menor intensidad el aprendizaje kinest ´ esico, que ´
+se busca tratar mediante la experiencia de conseguir la informacion de forma propia, al involucrarse con la herramienta, ´
+obtener la informacion espec ´ ´ıfica y de una forma distinta, pero
+siempre basada en informacion proporcionada. ´
+Se debe mencionar que el proyecto es parte del curso
+de Inteligencia Artificial, de la carrera de Bachillerato en
+Ingenier´ıa en Computacion del Instituto Tecnol ´ ogico de Costa ´
+Rica. Este fue desarrollado en el segundo semestre del ano˜
+2023, como parte del proyecto del curso, cuya finalidad
+es tener un acercamiento a las tecnolog´ıas de inteligencia
+artificial que se encuentran en tendencia en el momento de
+la elaboracion de este proyecto. La idea fue del estudiante y ´
+se conto con la aprobaci ´ on del profesor.
