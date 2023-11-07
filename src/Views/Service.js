@@ -10,7 +10,7 @@ import './Service.css'
 function ChatBotApp() {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      handleUserMessage("usuario");
+      handleUserMessage(input);
     }
   };
 
@@ -63,7 +63,8 @@ function ChatBotApp() {
 
   async function handleUserMessage(userMessage) {
     // Guardar el mensaje del usuario
-    const newUserMessage = { text: userMessage, type: "user" };
+    console.log(userMessage)
+    let newUserMessage = { text: userMessage, type: "user" };
     setMessages((prevMessages) => [...prevMessages, newUserMessage]);
 
     if (userMessage.trim() !== "") {

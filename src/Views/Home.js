@@ -22,31 +22,31 @@ function App() {
       <Header />
 
       {/* <!--SECTION HERO BLOG START--> */}
-      <section class="hero">
-        <div class="container">
-          <div class="left-col">
-            <p class="sub-head">Bienvenido a</p>
+      <section className="hero">
+        <div className="container">
+          <div className="left-col">
+            <p className="sub-head">Bienvenido a</p>
             <h1>FriendlyPDF</h1>
 
-            <div class="hero-cta">
-              <Link to="/service" class="primery-cta">
+            <div className="hero-cta">
+              <Link to="/service" className="primery-cta">
                 Probar Servicio
               </Link>
-              <a href="#" class="watch-video-cta">
+              <a href="#" className="watch-video-cta">
                 <img src={video} alt="Video Clip" />
                 Video demostrativo
               </a>
             </div>
           </div>
 
-          <img src={illustration} alt="Illustration" class="hero-img" />
+          <img src={illustration} alt="Illustration" className="hero-img" />
         </div>
       </section>
       {/* <!--SECTION HERO BLOG END--> */}
 
       {/* <!--SECTION FEATURES BLOG START--> */}
-      <section class="features-section" style={{ textAlign: 'initial'}}>
-        <div class="container">
+      <section className="features-section" style={{ textAlign: 'initial'}}>
+        <div className="container">
           <h1>Puedes: </h1>
           <ul>
             <li>-Subir tu documento</li>
@@ -62,8 +62,8 @@ function App() {
       {/* <!--SECTION FEATURES BLOG END--> */}
 
       {/* <!--SECTION TEST  BLOG START--> */}
-      <section class="test-monials-section">
-        <div class="container">
+      <section className="test-monials-section">
+        <div className="container">
           <ul>
             {/* <!--PERSON 1--> */}
             <li>
@@ -99,8 +99,8 @@ function App() {
         </div>
       </section>
 
-      <section class="test-ia-section">
-        <div class="container">
+      <section className="test-ia-section">
+        <div className="container">
           <ul>
             {/* <!--PERSON 1--> */}
             <li>
