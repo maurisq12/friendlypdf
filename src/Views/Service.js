@@ -53,6 +53,7 @@ function ChatBotApp() {
         document.getElementById('chatPDF').style.display = 'block';
         document.getElementById('selecciona').style.display = 'none';
         document.getElementById('title').style.display = 'none';
+        alert("De momento sólo se aceptan consultas a documentos en INGLÉS");
 
       } catch (error) {
         console.error('Error en procesarPrompt:', error);
@@ -98,7 +99,7 @@ function ChatBotApp() {
             <a id="reload" href="javascript:location.reload();" style={{ color: 'red', display: 'none' }} >&laquo; Volver</a>
           </div>
           <p id="resultSelectSuccess" style={{ color: 'green', display: 'none' }}>
-            ¡Archivo agregado con éxito! Ahora puedes hacer consultas
+            ¡Archivo agregado con éxito! Ahora puedes hacer consultas a documentos EN INGLÉS
           </p>
           <p id="resultSelectFail" style={{ color: 'red', display: 'none' }}>
             Error, inténtalo de nuevo o prueba con otro documento
